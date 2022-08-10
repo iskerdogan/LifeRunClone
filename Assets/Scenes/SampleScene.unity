@@ -207,6 +207,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &347984459 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 431031247469393501, guid: 7547199abb00046408b6721eb6dd1d61, type: 3}
+  m_PrefabInstance: {fileID: 74234914709425958}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &386637992
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,6 +576,37 @@ Transform:
   m_Father: {fileID: 1750137270}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 53.3, y: -127, z: 0}
+--- !u!1 &839822323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5948751921579791950, guid: 7547199abb00046408b6721eb6dd1d61, type: 3}
+  m_PrefabInstance: {fileID: 74234914709425958}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &839822325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839822323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6b252a83cbd9c4391e33aa60a3b793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageValue: 0
+--- !u!65 &839822326
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839822323}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.90639263, y: 1.3247093, z: 0.11104107}
+  m_Center: {x: 0.003120249, y: 0.6703313, z: 0.0017161369}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,6 +1187,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 74234912881378252, guid: 7547199abb00046408b6721eb6dd1d61, type: 3}
+      propertyPath: activateMovementGate
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 74234914121579881, guid: 7547199abb00046408b6721eb6dd1d61, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -1198,6 +1238,14 @@ PrefabInstance:
     - target: {fileID: 74234914121579883, guid: 7547199abb00046408b6721eb6dd1d61, type: 3}
       propertyPath: m_Name
       value: Gates
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186903273826655414, guid: 7547199abb00046408b6721eb6dd1d61, type: 3}
+      propertyPath: movementObstacle
+      value: 
+      objectReference: {fileID: 347984459}
+    - target: {fileID: 4186903273826655414, guid: 7547199abb00046408b6721eb6dd1d61, type: 3}
+      propertyPath: activateMovementGate
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7547199abb00046408b6721eb6dd1d61, type: 3}
@@ -2779,6 +2827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gateController: {fileID: 2514193295759432511}
+  movementObstacle: {fileID: 0}
   operationType: 1
   colorType: 1
   text: {fileID: 3821508982095814943}
@@ -3943,6 +3992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gateController: {fileID: 2514193295759432511}
+  movementObstacle: {fileID: 0}
   operationType: 1
   colorType: 1
   text: {fileID: 3821508982156360094}

@@ -8,6 +8,9 @@ public class Gate : MonoBehaviour,ICollectable
 {
     [SerializeField]
     private GateController gateController;
+
+    [SerializeField]
+    private GameObject movementObstacle;
     
     public OperationType operationType;
 
@@ -31,7 +34,7 @@ public class Gate : MonoBehaviour,ICollectable
         }
         if (activateMovementGate)
         {
-            transform.LeanMoveLocalX(1,0.5f).setLoopPingPong();
+            movementObstacle.transform.LeanMoveLocalY(1.320624f,2f).setLoopPingPong();
         }
 
         switch (operationType)
