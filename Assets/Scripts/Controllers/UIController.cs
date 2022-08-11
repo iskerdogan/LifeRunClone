@@ -1,130 +1,95 @@
-// using System;
-// using System.Collections;
-// using System.Collections.Generic;
-// using TMPro;
-// using UnityEngine;
-// using Utilities;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using Utilities;
 
-// public class UIController : Singleton<UIController>
-// {
-//     [SerializeField]
-//     private GameObject swipeToMove;
+public class UIController : Singleton<UIController>
+{
 
-//     [SerializeField]
-//     private GameObject startPanel;
+    [SerializeField]
+    private GameObject failPanel;
 
-//     [SerializeField]
-//     private GameObject failPanel;
-
-//     [SerializeField]
-//     private GameObject LevelComplatedPanel;
-
-//     [SerializeField]
-//     private TextMeshPro priceTagText;
-
-//     [SerializeField]
-//     private TextMeshProUGUI MoneyText;
-
-//     [SerializeField]
-//     private TextMeshProUGUI levelText;
-
-//     [SerializeField]
-//     private TextMeshProUGUI popUpText;
+    [SerializeField]
+    private GameObject LevelComplatedPanel;
 
 
-//     void Start()
-//     {
-//         InputSystem.Instance.TouchPositionChanged += OnTouchPositionChanged;
-//         GameManager.OnAfterStateChanged += OnAfterStateChanged;
-//         PlayerController.Instance.ChangePrice += OnChangePrice;
-//         MovementController.Instance.MultiplicationIsComplete += OnMultiplicationIsComplete;
+    [SerializeField]
+    private TextMeshProUGUI spermCountText;
 
-//     }
+    [SerializeField]
+    private TextMeshProUGUI popUpText;
 
 
-//     private void InitGame()
-//     {
-//         InputSystem.Instance.TouchPositionChanged += OnTouchPositionChanged;
-//         GameManager.OnAfterStateChanged += OnAfterStateChanged;
+    void Start()
+    {
+        // InputSystem.Instance.TouchPositionChanged += OnTouchPositionChanged;
+        // GameManager.OnAfterStateChanged += OnAfterStateChanged;
+        // PlayerController.Instance.ChangePrice += OnChangePrice;
+        // MovementController.Instance.MultiplicationIsComplete += OnMultiplicationIsComplete;
+        SpermController.Instance.OnSpermCountChanged += OnSpermCountChanged;
 
-//         startPanel.SetActive(true);
-//         failPanel.SetActive(false);
-//         LevelComplatedPanel.SetActive(false);
-//         priceTagText.text = 0 + "$";
-//         MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
-//         SwipeToMove();
-//         GetCurrentLevel();
-//     }
+    }
 
-//     private void GetCurrentLevel()
-//     {
-//         levelText.text = "Level " + (SaveManager.Instance.CurrentLevel + 1).ToString();
-//     }
+    private void OnSpermCountChanged()
+    {
+        spermCountText.text = SpermController.Instance.CurrentSpermCount.ToString();
+    }
 
-//     private void SwipeToMove()
-//     {
-//         // swipeToMove.transform.LeanMoveLocalX(-270f, 0.5f).setOnComplete(() => swipeToMove.transform.LeanMoveLocalX(270f, 0.5f).setLoopPingPong());
-//     }
-//     private void OnTouchPositionChanged(Touch touch)
-//     {
-//         if (touch.phase != TouchPhase.Began) return;
-//         startPanel.SetActive(false);
-//         InputSystem.Instance.TouchPositionChanged -= OnTouchPositionChanged;
-//         // LeanTween.delayedCall(.5f, () => GameManager.Instance.ChangeGameState(GameState.InGame));
-//         GameManager.Instance.ChangeGameState(GameState.InGame);
 
-//     }
-//     private void OnChangePrice()
-//     {
-//         if (PlayerController.Instance.CurrentPrice < 0)
-//         {
-//             priceTagText.text = 0 + "$";
-//         }
-//         else
-//         {
-//             priceTagText.text = PlayerController.Instance.CurrentPrice.ToString() + "$";
-//         }
-//     }
+    // private void InitGame()
+    // {
+    //     InputSystem.Instance.TouchPositionChanged += OnTouchPositionChanged;
+    //     GameManager.OnAfterStateChanged += OnAfterStateChanged;
 
-//     private void OnChangeMoney()
-//     {
-//        MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
-//     }
+    //     startPanel.SetActive(true);
+    //     failPanel.SetActive(false);
+    //     LevelComplatedPanel.SetActive(false);
+    //     priceTagText.text = 0 + "$";
+    //     MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
+    //     SwipeToMove();
+    //     GetCurrentLevel();
+    // }
 
-//     public void PopUp()
-//     {
-//         if ((SaveManager.Instance.CurrentLevel + 1) == 1) popUpText.text = "+" + PlayerPrefs.GetInt("Money").ToString();
+    private void GetCurrentSpermCount()
+    {
+        spermCountText.text = "Level " + (SaveManager.Instance.CurrentLevel + 1).ToString();
+    }
+
+    private void SwipeToMove()
+    {
+        // swipeToMove.transform.LeanMoveLocalX(-270f, 0.5f).setOnComplete(() => swipeToMove.transform.LeanMoveLocalX(270f, 0.5f).setLoopPingPong());
+    }
+
+
+    // public void PopUp()
+    // {
+    //     if ((SaveManager.Instance.CurrentLevel + 1) == 1) popUpText.text = "+" + PlayerPrefs.GetInt("Money").ToString();
         
-//         popUpText.text = "+" + PlayerController.Instance.TempMoney.ToString();
-//         // LeanTween.moveLocalY(popUpText.gameObject, 855.5f, .5f).setOnComplete(() => LeanTween.delayedCall(.5f, () => LeanTween.moveLocalY(popUpText.gameObject, 929.599976f, 0)));
+    //     popUpText.text = "+" + PlayerController.Instance.TempMoney.ToString();
+    //     // LeanTween.moveLocalY(popUpText.gameObject, 855.5f, .5f).setOnComplete(() => LeanTween.delayedCall(.5f, () => LeanTween.moveLocalY(popUpText.gameObject, 929.599976f, 0)));
         
-//     }
+    // }
 
-//     private void OnMultiplicationIsComplete()
-//     {
-//         OnChangeMoney();
-//         PopUp();
-//         // LeanTween.delayedCall(1f,()=>GameManager.Instance.ChangeGameState(GameState.Success));
-//     }
+    // private void OnAfterStateChanged(GameState newState)
+    // {
+    //     switch (newState)
+    //     {
+    //         case GameState.Start:
+    //             // LeanTween.cancelAll();
+    //             InitGame();
+    //             break;
+    //         case GameState.Fail:
+    //             failPanel.SetActive(true);
+    //             break;
+    //         case GameState.Success:
+    //             LevelComplatedPanel.SetActive(true);
+    //             break;
+    //         case GameState.Final:
+    //             break;
 
-//     private void OnAfterStateChanged(GameState newState)
-//     {
-//         switch (newState)
-//         {
-//             case GameState.Start:
-//                 // LeanTween.cancelAll();
-//                 InitGame();
-//                 break;
-//             case GameState.Fail:
-//                 failPanel.SetActive(true);
-//                 break;
-//             case GameState.Success:
-//                 LevelComplatedPanel.SetActive(true);
-//                 break;
-//             case GameState.Final:
-//                 break;
+    //     }
+    // }
 
-//         }
-//     }
-
-// }
+}

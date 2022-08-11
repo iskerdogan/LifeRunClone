@@ -72,16 +72,16 @@ public class Gate : MonoBehaviour,ICollectable
         switch (operationType)
         {
             case OperationType.Div:
-                PlayerController.Instance.DecrasePrice(value,OperationType.Div);
+                PlayerController.Instance.DecraseSpermCount(value,OperationType.Div);
                 break;
             case OperationType.Mul:
-                PlayerController.Instance.IncreasePrice(value,OperationType.Mul);
+                PlayerController.Instance.IncreaseSpermCount(value,OperationType.Mul);
                 break;
             case OperationType.Sub:
-                PlayerController.Instance.IncreasePrice(value,OperationType.Sub);
+                PlayerController.Instance.IncreaseSpermCount(value,OperationType.Sub);
                 break;
             case OperationType.Sum:
-                PlayerController.Instance.DecrasePrice(value,OperationType.Sum);
+                PlayerController.Instance.DecraseSpermCount(value,OperationType.Sum);
                 break;
         }
     }

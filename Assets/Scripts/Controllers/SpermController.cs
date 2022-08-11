@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class SpermController : Singleton<SpermController>
     private List<Sperm> sperms=new List<Sperm>();
     private List<Sperm> activeSperms=new List<Sperm>();
 
+    public event Action OnSpermCountChanged;
+
     private void Awake() 
     {
         GenerateSperms();
@@ -30,7 +33,8 @@ public class SpermController : Singleton<SpermController>
         var sperm = sperms[currentSpermCount];
         activeSperms.Add(sperm);
         sperm.gameObject.SetActive(true);
-        sperm.SetTarget(spermsPositions[currentSpermCount++]);  
+        sperm.SetTarget(spermsPositions[currentSpermCount++]);
+        OnSpermCountChanged?.Invoke();  
         Rearrange();
 
     }
@@ -42,11 +46,13 @@ public class SpermController : Singleton<SpermController>
         {
             sperms[--currentSpermCount].gameObject.SetActive(false);
             activeSperms.RemoveAt(activeSperms.Count-1);
+            OnSpermCountChanged?.Invoke();
         }
         else
         {
             sperm.gameObject.SetActive(false);
             currentSpermCount--;
+            OnSpermCountChanged?.Invoke();
             activeSperms.Remove(sperm);
             Debug.Log(sperm);
             Rearrange();

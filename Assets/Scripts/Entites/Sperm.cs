@@ -17,24 +17,26 @@ public class Sperm : MonoBehaviour
         var prezervatif = other.GetComponent<Prezervatif>();
         if (prezervatif != null)
         {
-            // gameObject.SetActive(false);
-            // LeanTween.delayedCall(.3f,()=>);
             SpermController.Instance.Remove(this);
             prezervatif.Collect();
         }
         var rotatingObstacle = other.GetComponent<RotatingObstacle>();
         if (rotatingObstacle != null)
         {
-            // gameObject.SetActive(false);
-            // LeanTween.delayedCall(.3f,()=>);
             SpermController.Instance.Remove(this);
         }
         var knifeObstacle = other.GetComponent<KnifeObstacle>();
         if (knifeObstacle != null)
         {
-            // gameObject.SetActive(false);
-            // LeanTween.delayedCall(.3f,()=>);
             SpermController.Instance.Remove(this);
+        }
+        var baby = other.GetComponent<Baby>();
+        if (baby != null)
+        {
+            baby.Collect();
+            var temp = gameObject.transform.position;
+            baby.GetComponent<BoxCollider>().enabled = false;
+            LeanTween.move(this.gameObject,baby.transform.position,.3f).setOnComplete(()=>{gameObject.SetActive(false); transform.position = temp;SpermController.Instance.Remove(this);});
         }
             
     }

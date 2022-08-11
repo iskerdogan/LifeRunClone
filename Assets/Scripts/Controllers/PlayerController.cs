@@ -76,7 +76,7 @@ public class PlayerController : Singleton<PlayerController>
     //     }
 
     // }
-    public void DecrasePrice(int gateValue,OperationType operationType)
+    public void DecraseSpermCount(int gateValue,OperationType operationType)
     {
         var newValue = SpermController.Instance.CurrentSpermCount;
         oldSpermCount = SpermController.Instance.CurrentSpermCount;
@@ -102,7 +102,7 @@ public class PlayerController : Singleton<PlayerController>
         }
     }
 
-    public void IncreasePrice(int gateValue,OperationType operationType)
+    public void IncreaseSpermCount(int gateValue,OperationType operationType)
     {
         var newValue = SpermController.Instance.CurrentSpermCount;
         oldSpermCount = SpermController.Instance.CurrentSpermCount;
