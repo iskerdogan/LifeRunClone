@@ -12,21 +12,32 @@ public class SpermController : Singleton<SpermController>
     [SerializeField]
     private GameObject spermPrefab;
 
+    [SerializeField]
+    private int finalSpermCount;
+
+    public int FinalSpermCount => finalSpermCount;
+    private bool isSuccess;
+    public bool IsSuccess => isSuccess;
     private int currentSpermCount;
     public int CurrentSpermCount => currentSpermCount;
-    private List<Sperm> sperms=new List<Sperm>();
-    private List<Sperm> activeSperms=new List<Sperm>();
+    private List<Sperm> sperms = new List<Sperm>();
+    private List<Sperm> activeSperms = new List<Sperm>();
+
+    public List<Sperm> ActiveSperms => activeSperms;
 
     public event Action OnSpermCountChanged;
 
-    private void Awake() 
+    private void Awake()
     {
         GenerateSperms();
-    }
-    private void Start() 
-    {
         Add();
     }
+
+    private void Start()
+    {
+        GameManager.OnAfterStateChanged += OnAfterStateChanged;
+    }
+
     public void Add()
     {
         if (currentSpermCount >= spermsPositions.Length) return;
@@ -34,9 +45,7 @@ public class SpermController : Singleton<SpermController>
         activeSperms.Add(sperm);
         sperm.gameObject.SetActive(true);
         sperm.SetTarget(spermsPositions[currentSpermCount++]);
-        OnSpermCountChanged?.Invoke();  
-        Rearrange();
-
+        OnSpermCountChanged?.Invoke();
     }
 
     public void Remove(Sperm sperm = null)
@@ -45,7 +54,7 @@ public class SpermController : Singleton<SpermController>
         if (sperm == null)
         {
             sperms[--currentSpermCount].gameObject.SetActive(false);
-            activeSperms.RemoveAt(activeSperms.Count-1);
+            activeSperms.RemoveAt(activeSperms.Count - 1);
             OnSpermCountChanged?.Invoke();
         }
         else
@@ -54,7 +63,6 @@ public class SpermController : Singleton<SpermController>
             currentSpermCount--;
             OnSpermCountChanged?.Invoke();
             activeSperms.Remove(sperm);
-            Debug.Log(sperm);
             Rearrange();
         }
     }
@@ -64,10 +72,9 @@ public class SpermController : Singleton<SpermController>
         for (int i = 0; i < spermsPositions.Length; i++)
         {
             var sperm = Instantiate(spermPrefab, Vector3.zero, Quaternion.identity, transform);
-            sperm.LeanRotateY(180,0f);
             sperm.SetActive(false);
             sperms.Add(sperm.GetComponent<Sperm>());
-            
+
         }
     }
 
@@ -80,5 +87,20 @@ public class SpermController : Singleton<SpermController>
         }
     }
 
+    private void SuccesOrFail() => isSuccess = currentSpermCount >= finalSpermCount ? true : false;
+
+    private void OnAfterStateChanged(GameState newState)
+    {
+        switch (newState)
+        {
+            case GameState.InGame:
+                currentSpermCount = 0;
+                Add();
+                break;
+            case GameState.Final:
+                SuccesOrFail();
+                break;
+        }
+    }
 
 }

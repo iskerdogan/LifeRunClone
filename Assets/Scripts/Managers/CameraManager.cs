@@ -7,12 +7,10 @@ using Utilities;
 
 public class CameraManager : Singleton<CameraManager>
 {
-    // [SerializeField]
-    // private CinemachineVirtualCamera startCam;
-
     [SerializeField]
     private CinemachineVirtualCamera FinishCam;
 
+    [SerializeField]
     public CinemachineVirtualCamera inGameCam;
 
 
@@ -25,13 +23,16 @@ public class CameraManager : Singleton<CameraManager>
     {
         switch (newState)
         {
-            case GameState.Start:
+            case GameState.InGame:
                 inGameCam.Priority = 9;
                 FinishCam.Priority =7;
                 break;
             case GameState.Final:
                 FinishCam.Priority =11;
                 inGameCam.Priority = 7;
+                break;
+            case GameState.Success:
+                inGameCam.transform.position = Vector3.zero;
                 break;
         }
     }

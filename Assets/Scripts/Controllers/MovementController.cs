@@ -100,6 +100,7 @@ public class MovementController : Singleton<MovementController>
         switch (newState)
         {
             case GameState.InGame:
+                transform.position = Vector3.zero;
                 currentSpeed = speed;
                 currentSideSpeed = sideSpeed;
                 break;

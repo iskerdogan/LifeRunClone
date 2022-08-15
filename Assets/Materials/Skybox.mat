@@ -112,5 +112,5 @@ Material:
     - _HColor: {r: 0.785, g: 0.785, b: 0.785, a: 1}
     - _SColor: {r: 0.19499996, g: 0.19499996, b: 0.19499996, a: 1}
     - _TopColor: {r: 0.16509432, g: 0.24898411, b: 1, a: 0}
-    - _Up: {r: 0, g: 1, b: 0, a: 0}
+    - _Up: {r: 0, g: -1, b: 0, a: 0}
   m_BuildTextureStacks: []

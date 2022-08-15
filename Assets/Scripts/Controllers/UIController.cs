@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Utilities;
 
 public class UIController : Singleton<UIController>
@@ -14,6 +15,9 @@ public class UIController : Singleton<UIController>
     [SerializeField]
     private GameObject LevelComplatedPanel;
 
+    [SerializeField]
+    private GameObject inGamePanel;
+
 
     [SerializeField]
     private TextMeshProUGUI spermCountText;
@@ -21,75 +25,91 @@ public class UIController : Singleton<UIController>
     [SerializeField]
     private TextMeshProUGUI popUpText;
 
+    [SerializeField]
+    private Image uiFillImage;
+
+    [SerializeField]
+    private Transform playerTransform;
+
+    [SerializeField]
+    private Transform endLineTransform;
+
+    private Vector3 endLinePosition;
+    private float fullDistance;
+    private Vector3 playerPos;
+    private float progressValue;
 
     void Start()
     {
-        // InputSystem.Instance.TouchPositionChanged += OnTouchPositionChanged;
-        // GameManager.OnAfterStateChanged += OnAfterStateChanged;
-        // PlayerController.Instance.ChangePrice += OnChangePrice;
-        // MovementController.Instance.MultiplicationIsComplete += OnMultiplicationIsComplete;
+        spermCountText.text = SpermController.Instance.CurrentSpermCount.ToString() + "/" + SpermController.Instance.FinalSpermCount.ToString();
+        //endLinePosition = endLineTransform.position;
+        fullDistance = GetDistance();
+
+        GameManager.OnAfterStateChanged += OnAfterStateChanged;
         SpermController.Instance.OnSpermCountChanged += OnSpermCountChanged;
+
+    }
+
+    private void Update() 
+    {
+        if (GameManager.Instance.State != GameState.InGame) return;
+        playerPos = playerTransform.position;
+        float newDisctance = GetDistance();
+        Debug.Log(fullDistance);
+        Debug.Log(newDisctance);
+        progressValue = Mathf.InverseLerp(fullDistance,0f,newDisctance);
+        Debug.Log(progressValue);
+        uiFillImage.fillAmount = progressValue;
+        //UpdateProgressFill(progressValue);
 
     }
 
     private void OnSpermCountChanged()
     {
-        spermCountText.text = SpermController.Instance.CurrentSpermCount.ToString();
+        spermCountText.text = SpermController.Instance.CurrentSpermCount.ToString() + "/" + SpermController.Instance.FinalSpermCount.ToString();
+        if (GameManager.Instance.State == GameState.InGame && SpermController.Instance.CurrentSpermCount <= 0) GameManager.Instance.ChangeGameState(GameState.Fail);
     }
 
 
-    // private void InitGame()
-    // {
-    //     InputSystem.Instance.TouchPositionChanged += OnTouchPositionChanged;
-    //     GameManager.OnAfterStateChanged += OnAfterStateChanged;
-
-    //     startPanel.SetActive(true);
-    //     failPanel.SetActive(false);
-    //     LevelComplatedPanel.SetActive(false);
-    //     priceTagText.text = 0 + "$";
-    //     MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
-    //     SwipeToMove();
-    //     GetCurrentLevel();
-    // }
-
-    private void GetCurrentSpermCount()
+    private void InitGame()
     {
-        spermCountText.text = "Level " + (SaveManager.Instance.CurrentLevel + 1).ToString();
+        inGamePanel.SetActive(true);
+        failPanel.SetActive(false);
+        LevelComplatedPanel.SetActive(false);
     }
 
-    private void SwipeToMove()
+    private void GetCurrentSpermCount() => spermCountText.text = "Level " + (SaveManager.Instance.CurrentLevel + 1).ToString();
+
+
+    private float GetDistance()
     {
-        // swipeToMove.transform.LeanMoveLocalX(-270f, 0.5f).setOnComplete(() => swipeToMove.transform.LeanMoveLocalX(270f, 0.5f).setLoopPingPong());
+        return Vector3.Distance(MovementController.Instance.transform.position,endLineTransform.position);
     }
-
-
-    // public void PopUp()
+    // private void UpdateProgressFill(float value)
     // {
-    //     if ((SaveManager.Instance.CurrentLevel + 1) == 1) popUpText.text = "+" + PlayerPrefs.GetInt("Money").ToString();
-        
-    //     popUpText.text = "+" + PlayerController.Instance.TempMoney.ToString();
-    //     // LeanTween.moveLocalY(popUpText.gameObject, 855.5f, .5f).setOnComplete(() => LeanTween.delayedCall(.5f, () => LeanTween.moveLocalY(popUpText.gameObject, 929.599976f, 0)));
-        
-    // }
+    //      value;
+    // } 
 
-    // private void OnAfterStateChanged(GameState newState)
-    // {
-    //     switch (newState)
-    //     {
-    //         case GameState.Start:
-    //             // LeanTween.cancelAll();
-    //             InitGame();
-    //             break;
-    //         case GameState.Fail:
-    //             failPanel.SetActive(true);
-    //             break;
-    //         case GameState.Success:
-    //             LevelComplatedPanel.SetActive(true);
-    //             break;
-    //         case GameState.Final:
-    //             break;
 
-    //     }
-    // }
+    private void OnAfterStateChanged(GameState newState)
+    {
+        switch (newState)
+        {
+            case GameState.InGame:
+                InitGame();
+                fullDistance = GetDistance();
+                break;
+            case GameState.Fail:
+
+                failPanel.SetActive(true);
+                break;
+            case GameState.Success:
+                LevelComplatedPanel.SetActive(true);
+                break;
+            case GameState.Final:
+                break;
+
+        }
+    }
 
 }

@@ -12,6 +12,6 @@ public class RoadController : Singleton<RoadController>
     public void FinishPlatformPosition(float zPosition)
     {
         FinisPlatform.SetActive(true);
-        FinisPlatform.transform.position = new Vector3(0, 0, zPosition - 4);
+        FinisPlatform.transform.position = new Vector3(0, 0, zPosition);
     }
 }

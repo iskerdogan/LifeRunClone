@@ -17,6 +17,7 @@ public class SaveManager : Singleton<SaveManager>
     private void Start() 
     {
         GameManager.OnAfterStateChanged += OnAfterStateChanged;
+        Debug.Log(currentLevel);
     }
 
     public void SaveMoney(int money)

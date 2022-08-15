@@ -43,6 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5563524415451652041}
   - component: {fileID: 5244703781770326016}
+  - component: {fileID: 5515302952917509227}
   m_Layer: 0
   m_Name: Prezervatif
   m_TagString: Untagged
@@ -79,8 +80,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c434a1ed036ae62409b9a86fbfa6d1d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prezervatifSmall: {fileID: 0}
-  prezervatifBig: {fileID: 0}
+  prezervatifSmall: {fileID: 5704028313887349342}
+  prezervatifBig: {fileID: 1491528156257289906}
+--- !u!65 &5515302952917509227
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715554351658426051}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.6563808, y: 2.7970693, z: 2.181244}
+  m_Center: {x: -0.033950865, y: 1.4327496, z: 0.0033187866}
 --- !u!1 &4529767864144435951
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CollectableSperm : MonoBehaviour, ICollectable
@@ -7,6 +8,9 @@ public class CollectableSperm : MonoBehaviour, ICollectable
     
     [SerializeField]
     private float speed;
+
+    [SerializeField]
+    private TextMeshPro popUpText;
 
     private Vector3 posA;
     private Vector3 posB;
@@ -37,13 +41,12 @@ public class CollectableSperm : MonoBehaviour, ICollectable
             ChangeDestionation();
         }
     }
-    private void ChangeDestionation()
-    {
-        nextPos = nextPos != posA ? posA : posB;
-    }
+    private void ChangeDestionation() => nextPos = nextPos != posA ? posA : posB;
     public void Collect()
     {
-        gameObject.SetActive(false);
+        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        popUpText.gameObject.SetActive(true);
+        LeanTween.moveLocalY(popUpText.gameObject, 0.828f, .5f).setOnComplete(() =>{LeanTween.delayedCall(.5f, () => LeanTween.moveLocalY(popUpText.gameObject, .235f, 0)); popUpText.gameObject.SetActive(false);});
         SpermController.Instance.Add();
     }
 }
